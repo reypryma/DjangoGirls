@@ -1,0 +1,32 @@
+{% extends 'comment/base.html' %}
+{% block comment %}
+    <header class="page-header">
+        <div class="container">
+            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+        </div>
+    </header>
+    <main class="content container">
+        <div class="row">
+            <div class="col">
+                <ul>
+                    {% for comment in comments %}
+                        <li>{{ comment.content }}</li>
+                         {% if user.is_authenticated %}
+                            <a href="{% url 'delete_comment' pk=post.pk comment_id=comment.id%}">Delete</a>
+                        {% endif %}
+                    {% empty %}
+                        <li>No comments yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer class="content container">
+{#        {% block form %}#}
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="save btn btn-secondary">Save</button>
+        </form>
+{#        {% endblock %}#}
+    </footer>
+{% endblock %}
