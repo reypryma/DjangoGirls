@@ -14,7 +14,15 @@
                 {{ post.published_date }}
             </time>
         {% endif %}
+        <div class="row row-cols-2">
         <h2>{{ post.title }}</h2>
+            <h2>{{ post.id }}</h2>
+        </div>
+
         <p>{{ post.text|linebreaksbr }}</p>
     </article>
+    <section>
+{#    How to redirect to comments page?#}
+        <a href="{% url 'show_comment' pk=post.id %}" class="btn btn-secondary"> Show Comment</a>
+    </section>
 {% endblock %}
