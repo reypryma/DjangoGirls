@@ -13,7 +13,8 @@
                         <li>{{ comment.content }}</li>
                          {% if user.is_authenticated %}
                             <a href="{% url 'delete_comment' pk=post.pk comment_id=comment.id%}">Delete</a>
-                        {% endif %}
+                                                        <a href="{% url 'edit_comment' pk=post.pk comment_id=comment.id %}">Edit</a>
+                         {% endif %}
                     {% empty %}
                         <li>No comments yet.</li>
                     {% endfor %}
@@ -23,10 +24,17 @@
     </main>
     <footer class="content container">
 {#        {% block form %}#}
+        {% if comment_form.errors %}
+            {% for field in comment_form %}
+            <p>{{ field.errors }} </p>
+            {% endfor %}
+        {% else %}
         <form method="POST" class="post-form">{% csrf_token %}
             {{ comment_form.as_p }}
             <button type="submit" class="save btn btn-secondary">Save</button>
         </form>
+        {% endif %}
+`
 {#        {% endblock %}#}
     </footer>
 {% endblock %}
